@@ -1,5 +1,7 @@
 package sia.tacocloud.tacos.controllers;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,39 +12,36 @@ import sia.tacocloud.tacos.dto.Ingredient;
 import sia.tacocloud.tacos.dto.Ingredient.Type;
 import sia.tacocloud.tacos.dto.Taco;
 import sia.tacocloud.tacos.dto.TacoOrder;
+import sia.tacocloud.tacos.repos.IngredientRepository;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
-@RequestMapping("/design")
-@SessionAttributes("tacoOrder")
+@RequestMapping("/design")  //Определяет тип запросов , которые обрабатывает этот контроллер
+@SessionAttributes("tacoOrder") //Указывает на то , что класс должен поддерживаться на уровне сеанса
+
+@Data
 public class DesignTacoController {
 
-    @ModelAttribute
+    private final IngredientRepository repository;
+
+
+
+    @ModelAttribute //аннотация, связывающая параметр метода или возвращаемое значение метода
+                   // с атрибутом модели , которая будет использоваться при выводе страницы. Такая же аннотация перед параметром,
+                 // указывает на то, что должен использоваться объект , помеченный аннотацией @ModelAttribute
     public void addIngredientsToModel(Model model){
-    List<Ingredient>  ingredients = Arrays.asList(
-            new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
-            new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-            new Ingredient("GRBF","Ground Beef", Type.PROTEIN),
-            new Ingredient("CARN", "Carnitas", Type.PROTEIN),
-            new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES),
-            new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-            new Ingredient("CHED", "Cheddar", Type.CHEESE),
-            new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
-            new Ingredient("SLSA", "Salsa", Type.SAUCE),
-            new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
-    );
-
-    Type[] types = Type.values();
-    for (Type type:types){
-        model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients,type));
+    Iterable<Ingredient> ingredients = repository.findAll();
+    Type[] types = Ingredient.Type.values();
+    for (Type type: types){
+        model.addAttribute(type.toString().toLowerCase(),
+                filterByType((List<Ingredient>) ingredients,type));
+    }
     }
 
-    }
     @ModelAttribute(name = "tacoOrder")
     public TacoOrder order(){
         return new TacoOrder();
@@ -51,6 +50,7 @@ public class DesignTacoController {
     @ModelAttribute(name = "taco")
     public Taco taco(){
         return new Taco();
+
     }
 
     @GetMapping
@@ -66,10 +66,6 @@ public class DesignTacoController {
         if (errors.hasErrors()){
             return "design";
         }
-//        ConvertionServiceFactoryBean s = new ConvertionServiceFactoryBean
-        Ingredient ingredient = new IngredientByIdConverter().convert("FLTO");
-        System.out.println(ingredient);
-        tacoOrder.addTaco(taco);
         log.info("Processing taco:{}",taco );
         return "redirect:/orders/current";
     }

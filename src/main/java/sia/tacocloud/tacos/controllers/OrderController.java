@@ -30,7 +30,7 @@ public class OrderController {
             return "orderForm";
         }
 
-        log.info("Order submitted: {}", order);
+      log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
         return "redirect:/";
     }
