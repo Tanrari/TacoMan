@@ -15,6 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 //Конвертер должен реализовывать интерфейс Converter<S,T>, в SpringBoot конвертер автоматически добавляется в заранее вызыванный бин (ConversionService)
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
+
     private IngredientRepository ingredientRepository;
 
     @Override

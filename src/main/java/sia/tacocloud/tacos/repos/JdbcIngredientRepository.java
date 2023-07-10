@@ -1,22 +1,12 @@
 package sia.tacocloud.tacos.repos;
-import jdk.internal.org.objectweb.asm.Type;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import sia.tacocloud.tacos.dto.Ingredient;
-import sia.tacocloud.tacos.dto.IngredientRef;
-import sia.tacocloud.tacos.dto.Taco;
-import sia.tacocloud.tacos.dto.TacoOrder;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,20 +14,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class JdbcIngredientRepository implements IngredientRepository {
 
-
     private JdbcTemplate jdbcTemplate;
 
 
     @Override
     public Iterable<Ingredient> findAll() {
-        return jdbcTemplate.query("select id,name, type from ingredient",
+        return jdbcTemplate.query("select id,name, type from Ingredient",
                 this::mapRowToIngredient);
-    }
-
-    private Ingredient  mapRowToIngredient(ResultSet row, int rowNum) throws SQLException {
-        return new Ingredient(row.getString("id"),
-                row.getString("name"),
-                Ingredient.Type.valueOf(row.getString("type")));
     }
 
     @Override
@@ -47,9 +30,17 @@ public class JdbcIngredientRepository implements IngredientRepository {
         return results.size()==0?Optional.empty():Optional.of(results.get(0));
     }
 
+    private Ingredient  mapRowToIngredient(ResultSet row, int rowNum) throws SQLException {
+        return new Ingredient(row.getString("id"),
+                row.getString("name"),
+                Ingredient.Type.valueOf(row.getString("type")));
+    }
+
     @Override
-    public Taco save(Taco order) {
-        return null;
+    public Ingredient save(Ingredient ingredient) {
+        jdbcTemplate.update("insert into Ingredient(id,name,type) values (?,?,?)",
+                ingredient.getId(), ingredient.getName(), ingredient.getType());
+        return ingredient;
     }
 
 

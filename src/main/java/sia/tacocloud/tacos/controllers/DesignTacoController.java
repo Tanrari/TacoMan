@@ -50,7 +50,6 @@ public class DesignTacoController {
     @ModelAttribute(name = "taco")
     public Taco taco(){
         return new Taco();
-
     }
 
     @GetMapping
@@ -61,6 +60,7 @@ public class DesignTacoController {
     private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type){
         return ingredients.stream().filter(x->x.getType().equals(type)).collect(Collectors.toList());
     }
+
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder){
         if (errors.hasErrors()){

@@ -2,7 +2,9 @@ package sia.tacocloud.tacos.repos;
 
 import jdk.internal.org.objectweb.asm.Type;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -16,15 +18,16 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
+//106  страница учебника
 @Repository
 @AllArgsConstructor
 public class JdbcOrderRepository implements OrderRepository {
     private JdbcOperations jdpcOperations;
 
+
     @Transactional
     public TacoOrder save(TacoOrder order) {
-        PreparedStatementCreatorFactory pscf =
+    PreparedStatementCreatorFactory pscf =
                 new PreparedStatementCreatorFactory(
                         "insert into Taco_Order "
                                 + "(delivery_name, delivery_street, delivery_city, "
@@ -69,7 +72,7 @@ public class JdbcOrderRepository implements OrderRepository {
         pscf.setReturnGeneratedKeys(true);
         PreparedStatementCreator psc = pscf.newPreparedStatementCreator(Arrays.asList(taco.getName(),taco.getCreatedAt(),orderId,orderKey));
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-       jdpcOperations.update(psc,keyHolder);
+        jdpcOperations.update(psc,keyHolder);
         long tacoId = keyHolder.getKey().longValue();
         taco.setId(tacoId);
         saveIngredientRefs(tacoId,taco.getIngredients());
@@ -86,4 +89,6 @@ public class JdbcOrderRepository implements OrderRepository {
                     ingredient.getName(), tacoId, key++);
         }
     }
+
+
 }

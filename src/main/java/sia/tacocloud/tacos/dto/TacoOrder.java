@@ -6,12 +6,14 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 //Используются валидаторы HibernateValidator и
 @Data
-public class TacoOrder {
+public class TacoOrder implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private Long id;
