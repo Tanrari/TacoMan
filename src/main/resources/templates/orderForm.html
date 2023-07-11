@@ -69,6 +69,13 @@
           th:errors="*{ccExpiration}">CC Num Error</span>
     <br/>
     <br>
+    <label for="ccCVV">CC_CV: </label>
+    <input type="text" th:field="*{ccCVV}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccCVV')}"
+          th:errors="*{ccCVV}">CC Num Error</span>
+    <br/>
+    <br>
 
 <!--    <label for="ccCVV">CVV: </label>-->
 <!--    <label for="ccNumber">Credit Card #: </label>-->

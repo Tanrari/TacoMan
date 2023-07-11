@@ -1,5 +1,6 @@
 package sia.tacocloud.tacos.converter;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 @Component
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 //Конвертер должен реализовывать интерфейс Converter<S,T>, в SpringBoot конвертер автоматически добавляется в заранее вызыванный бин (ConversionService)
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
 

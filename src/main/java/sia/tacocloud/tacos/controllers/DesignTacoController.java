@@ -22,13 +22,10 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")  //Определяет тип запросов , которые обрабатывает этот контроллер
 @SessionAttributes("tacoOrder") //Указывает на то , что класс должен поддерживаться на уровне сеанса
-
 @Data
 public class DesignTacoController {
 
     private final IngredientRepository repository;
-
-
 
     @ModelAttribute //аннотация, связывающая параметр метода или возвращаемое значение метода
                    // с атрибутом модели , которая будет использоваться при выводе страницы. Такая же аннотация перед параметром,

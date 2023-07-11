@@ -18,7 +18,7 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-//106  страница учебника
+
 @Repository
 @AllArgsConstructor
 public class JdbcOrderRepository implements OrderRepository {
