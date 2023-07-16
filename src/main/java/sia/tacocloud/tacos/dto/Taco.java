@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +23,17 @@ public class Taco {
 
     @NotNull
     @Size(min = 1,message = "Yo must choose at least 1 ingredient")
+
     @ManyToMany()
-    private List<Ingredient> ingredients;
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public void addIngredient(Ingredient ingredient){
         this.ingredients.add(ingredient);
     }
 }
+//    create table if not exists Taco (
+//        id identity,
+//        name varchar(50) not null,
+//        taco_order bigint not null,
+//        taco_order_key bigint not null,
+//        created_at timestamp not null

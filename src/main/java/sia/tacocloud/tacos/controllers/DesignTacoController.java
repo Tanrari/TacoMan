@@ -1,19 +1,15 @@
 package sia.tacocloud.tacos.controllers;
-
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import sia.tacocloud.tacos.converter.IngredientByIdConverter;
 import sia.tacocloud.tacos.dto.Ingredient;
 import sia.tacocloud.tacos.dto.Ingredient.Type;
 import sia.tacocloud.tacos.dto.Taco;
 import sia.tacocloud.tacos.dto.TacoOrder;
 import sia.tacocloud.tacos.repos.IngredientRepository;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,6 +59,7 @@ public class DesignTacoController {
         if (errors.hasErrors()){
             return "design";
         }
+        tacoOrder.addTaco(taco);
         log.info("Processing taco:{}",taco );
         return "redirect:/orders/current";
     }

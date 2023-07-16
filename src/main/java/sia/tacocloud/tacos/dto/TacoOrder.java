@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 //Используются валидаторы HibernateValidator и
 @Data
-@Entity
+@Entity(name = "Taco_Order")
 public class TacoOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
