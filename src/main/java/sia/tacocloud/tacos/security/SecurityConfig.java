@@ -47,10 +47,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
-        return http.authorizeRequests()
-                .antMatchers("/design",".orders").hasRole("USER")
-                .antMatchers("/","/**")
-                .permitAll().and().build();
+//        http.headers().frameOptions().disable();
+        return http
+                .authorizeRequests()
+                .antMatchers("/design", "/orders/**").access("hasRole('USER')")
+                .antMatchers("/", "/**").access("permitAll()")
+                .antMatchers("/h2-console/**").access("permitAll()")
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .and()
+                .csrf().disable()
+                .logout()
+                .logoutSuccessUrl("/").and()
+                .headers().frameOptions().disable()
+                .and()
+                .build();
     }
+
+
 
 }

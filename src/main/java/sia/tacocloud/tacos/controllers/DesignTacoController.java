@@ -56,6 +56,7 @@ public class DesignTacoController {
 
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder){
+        System.out.println("123123");
         if (errors.hasErrors()){
             return "design";
         }
