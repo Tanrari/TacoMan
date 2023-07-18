@@ -11,10 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import sia.tacocloud.tacos.dto.TacoOrder;
 import sia.tacocloud.tacos.dto.User;
@@ -73,5 +70,9 @@ public class OrderController {
         System.out.println("Order saved");
         return "redirect:/";
     }
-
+    @PutMapping(path = "/{orderId}",consumes = "application/json")
+    public TacoOrder putOrder(@PathVariable("orderId") Long orderId, @RequestBody TacoOrder order){
+        order.setId(orderId);
+        return orderRepo.save(order);
+    }
 }

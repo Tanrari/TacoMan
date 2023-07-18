@@ -17,7 +17,6 @@ import sia.tacocloud.tacos.repos.UserRepository;
 
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfig {
 
     @Bean
@@ -56,15 +55,16 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/design", "/orders/**").access("hasRole('USER')")
                 .antMatchers("/", "/**").access("permitAll()")
-                .antMatchers("/api/**").access("denyAll()")
+//                .antMatchers("/api/**").access("denyAll()")
 //                .antMatchers("/h2-console/**").access("permitAll()")
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .and()
-//                .csrf().disable()
+                  .csrf().disable()
                 .logout()
                 .logoutSuccessUrl("/").and()
+
 //                .headers().frameOptions().disable()
 //                .and()
                 .build();
