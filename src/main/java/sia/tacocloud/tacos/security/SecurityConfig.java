@@ -1,7 +1,10 @@
 package sia.tacocloud.tacos.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +16,8 @@ import sia.tacocloud.tacos.repos.UserRepository;
 
 
 @Configuration
+@EnableWebSecurity
+
 public class SecurityConfig {
 
     @Bean
@@ -23,7 +28,6 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepo){
-
 //        List<UserDetails> userList = new ArrayList<>();
 //        userList.add(new User("buzz",encoder.encode("password"), Arrays.asList(new SimpleGrantedAuthority("Role_USER"))));
 //        userList.add(new User("woody",encoder.encode("password"),Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"))));
@@ -52,16 +56,16 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/design", "/orders/**").access("hasRole('USER')")
                 .antMatchers("/", "/**").access("permitAll()")
-                .antMatchers("/h2-console/**").access("permitAll()")
+//                .antMatchers("/h2-console/**").access("permitAll()")
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .and()
-                .csrf().disable()
+//                .csrf().disable()
                 .logout()
                 .logoutSuccessUrl("/").and()
-                .headers().frameOptions().disable()
-                .and()
+//                .headers().frameOptions().disable()
+//                .and()
                 .build();
     }
 

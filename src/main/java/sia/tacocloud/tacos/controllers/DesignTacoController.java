@@ -61,6 +61,7 @@ public class DesignTacoController {
             return "design";
         }
         tacoOrder.addTaco(taco);
+        System.out.println(tacoOrder.getTacos());
         log.info("Processing taco:{}",taco );
         return "redirect:/orders/current";
     }
