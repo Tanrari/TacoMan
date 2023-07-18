@@ -8,7 +8,7 @@ import sia.tacocloud.tacos.dto.Taco;
 
 import java.net.URLConnection;
 
-public interface TacoRepository extends PagingAndSortingRepository {
+public interface TacoRepository extends PagingAndSortingRepository<Taco,Long> {
 
 
 }

@@ -2,6 +2,7 @@ package sia.tacocloud.tacos.controllers;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import sia.tacocloud.tacos.dto.Taco;
 import sia.tacocloud.tacos.repos.TacoRepository;
 
 @RestController
-@RequestMapping(path="/api/tacos/",produces = "application/json")
+@RequestMapping(path="/api/tacos",produces = "application/json")
 @CrossOrigin(origins = "http://tacocloud:8090")
 public class TacoController {
     private TacoRepository tacoRepo;
@@ -19,8 +20,10 @@ public class TacoController {
         this.tacoRepo = tacoRepo;
     }
     @GetMapping(params = "recent")
+    @PreAuthorize("hasRole('USER')")
     public Iterable<Taco> recentTacos(){
         PageRequest page = PageRequest.of(0,12, Sort.by("createdAt").descending());
+
         return tacoRepo.findAll(page).getContent();
 
     }

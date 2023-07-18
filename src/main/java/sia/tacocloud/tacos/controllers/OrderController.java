@@ -1,7 +1,9 @@
 package sia.tacocloud.tacos.controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +26,9 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
-@AllArgsConstructor
-@ConfigurationProperties(prefix = "taco.orders")
+//@AllArgsConstructor
+//@Data
+@ConfigurationProperties( prefix = "taco")
 public class OrderController {
     private  int pageSize = 20;
 
@@ -33,7 +36,15 @@ public class OrderController {
         this.pageSize = pageSize;
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
     private final OrderRepository orderRepo;
+
+    public OrderController(OrderRepository orderRepo) {
+        this.orderRepo = orderRepo;
+    }
 
     @GetMapping("/current")
     public String orderForm(){

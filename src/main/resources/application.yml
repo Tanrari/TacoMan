@@ -1,6 +1,9 @@
 
 server:
   port : 8090
+taco:
+  orders:
+    pageSize: 10
 
 spring:
   thymeleaf:
@@ -13,7 +16,4 @@ spring:
 
     hibernate:
       ddl-auto: create-drop
-taco:
-  orders:
-    pageSize: 10
 
